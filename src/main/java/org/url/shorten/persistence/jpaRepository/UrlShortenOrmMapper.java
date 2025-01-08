@@ -1,8 +1,8 @@
-package org.url.shorten.infrastructure.persistence.jpaRepository;
+package org.url.shorten.persistence.jpaRepository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.url.shorten.infrastructure.persistence.core.entity.UrlShorten;
+import org.url.shorten.persistence.core.entity.UrlShorten;
 
 import java.util.Optional;
 

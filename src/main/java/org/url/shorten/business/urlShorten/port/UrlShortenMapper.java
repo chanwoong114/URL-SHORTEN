@@ -1,8 +1,8 @@
 package org.url.shorten.business.urlShorten.port;
 
-import org.url.shorten.infrastructure.persistence.core.vo.UrlShortenVo;
+import org.url.shorten.business.urlShorten.dto.UrlShortenResponse;
 
 public interface UrlShortenMapper {
 
-    UrlShortenVo getUrlShortenById(long id);
+    UrlShortenResponse getUrlShortenById(long id);
 }

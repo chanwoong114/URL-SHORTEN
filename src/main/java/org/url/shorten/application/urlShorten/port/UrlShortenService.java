@@ -1,6 +1,8 @@
 package org.url.shorten.application.urlShorten.port;
 
+import org.url.shorten.application.urlShorten.dto.UrlShortenApiResponse;
+
 public interface UrlShortenService {
 
-    String shortenUrl(long id);
+    UrlShortenApiResponse shortenUrl(Long id);
 }
