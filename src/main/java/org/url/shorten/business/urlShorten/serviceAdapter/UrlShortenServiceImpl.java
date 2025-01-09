@@ -1,10 +1,13 @@
 package org.url.shorten.business.urlShorten.serviceAdapter;
 
+import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.url.shorten.application.urlShorten.dto.UrlShortenApiResponse;
 import org.url.shorten.application.urlShorten.port.UrlShortenService;
+import org.url.shorten.business.urlShorten.dto.UrlShortenResponse;
 import org.url.shorten.business.urlShorten.port.UrlShortenMapper;
-import org.url.shorten.infrastructure.persistence.core.vo.UrlShortenVo;
 
 @Service
 @RequiredArgsConstructor
@@ -14,8 +17,12 @@ public class UrlShortenServiceImpl implements UrlShortenService {
 
 
     @Override
-    public String shortenUrl(long id) {
-        UrlShortenVo urlShortenVo = urlShortenMapper.getUrlShortenById(id);
-        return urlShortenVo.url();
+    public UrlShortenApiResponse shortenUrl(Long id) {
+        if (Objects.isNull(id)) {
+            throw new IllegalArgumentException("id is null");
+        }
+
+        UrlShortenResponse urlShortenResponse = urlShortenMapper.getUrlShortenById(id);
+        return urlShortenResponse.toApiResponse();
     }
 }
