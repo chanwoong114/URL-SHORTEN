@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HoneController {
 
-    @GetMapping("/home")
+    @GetMapping("")
     public String home() {
         log.info("Home page");
         return "index";

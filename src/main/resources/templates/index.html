@@ -22,7 +22,7 @@
 
 <script>
     function getResult() {
-        var data = { originUrl: $("#originUrl").val() }
+        var data = { originalUrl: $("#originUrl").val(), algorithmNumber: 1 }
 
         $.ajax({
             url: "/shorten",

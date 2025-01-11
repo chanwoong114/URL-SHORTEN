@@ -1,13 +1,16 @@
 package org.url.shorten.business.urlShorten.serviceAdapter;
 
-import java.util.Objects;
+import org.springframework.stereotype.Service;
+import org.url.shorten.application.urlShorten.dto.CreateUrlApiResponse;
+import org.url.shorten.application.urlShorten.dto.SelectUrlApiResponse;
+import org.url.shorten.application.urlShorten.port.UrlShortenService;
+import org.url.shorten.business.urlShorten.dto.CreateUrlResponse;
+import org.url.shorten.business.urlShorten.dto.CreateUrlServiceRequest;
+import org.url.shorten.business.urlShorten.dto.SelectUrlServiceRequest;
+import org.url.shorten.business.urlShorten.dto.SelectUrlResponse;
+import org.url.shorten.business.urlShorten.port.UrlShortenMapper;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.url.shorten.application.urlShorten.dto.UrlShortenApiResponse;
-import org.url.shorten.application.urlShorten.port.UrlShortenService;
-import org.url.shorten.business.urlShorten.dto.UrlShortenResponse;
-import org.url.shorten.business.urlShorten.port.UrlShortenMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -17,12 +20,19 @@ public class UrlShortenServiceImpl implements UrlShortenService {
 
 
     @Override
-    public UrlShortenApiResponse shortenUrl(Long id) {
-        if (Objects.isNull(id)) {
-            throw new IllegalArgumentException("id is null");
-        }
+    public SelectUrlApiResponse selectUrl(SelectUrlServiceRequest request) {
 
-        UrlShortenResponse urlShortenResponse = urlShortenMapper.getUrlShortenById(id);
-        return urlShortenResponse.toApiResponse();
+        long id = request.decodingId();
+
+        SelectUrlResponse selectUrlResponse = urlShortenMapper.getUrlShortenById(id);
+        return selectUrlResponse.toApiResponse();
     }
+
+    @Override
+    public CreateUrlApiResponse createUrl(CreateUrlServiceRequest request) {
+
+        CreateUrlResponse createUrlResponse = urlShortenMapper.saveUrl(request.toUrlShortenVo());
+        return createUrlResponse.toApiResponse();
+    }
+
 }

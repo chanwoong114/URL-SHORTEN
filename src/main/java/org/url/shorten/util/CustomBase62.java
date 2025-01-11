@@ -1,11 +1,11 @@
 package org.url.shorten.util;
 
 
-public class Base62 {
+public class CustomBase62 implements UrlAlgorithm {
     private static final long BASE = 62L;
     private static final char[] CODEC = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
 
-    public static String encode(long id) {
+    public String encode(long id) {
         StringBuilder encoded = new StringBuilder();
 
         while (id > 0) {
@@ -16,7 +16,7 @@ public class Base62 {
         return encoded.toString();
     }
 
-    public static long decode(String shorten) {
+    public long decode(String shorten) {
         int decoded = 0;
         int power = 1;
 

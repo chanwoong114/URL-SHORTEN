@@ -6,23 +6,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class UrlShorten {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    private String urlHashCode;
-    private String url;
+    private int urlEncodingType;
+    private String originalUrl;
 
-    // salt 추가?
-    // 알고리즘 사용시 알고리즘 넘버?
+    public static UrlShorten of(Long id, int urlEncodingType, String originalUrl) {
+        return new UrlShorten(id, urlEncodingType, originalUrl);
+    }
 
     public UrlShortenVo toUrlShortenVo() {
-        return UrlShortenVo.of(id, urlHashCode, url);
+        return UrlShortenVo.of(id, urlEncodingType, originalUrl);
     }
 }
