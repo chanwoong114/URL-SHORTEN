@@ -1,19 +1,14 @@
 package org.url.shorten.application.urlShorten.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
-import org.url.shorten.application.urlShorten.dto.CreateUrlApiResponse;
-import org.url.shorten.application.urlShorten.dto.SelectUrlRequest;
-import org.url.shorten.application.urlShorten.dto.CreateUrlRequest;
-import org.url.shorten.application.urlShorten.port.UrlShortenService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+import org.url.shorten.application.urlShorten.dto.CreateUrlApiResponse;
+import org.url.shorten.application.urlShorten.dto.CreateUrlRequest;
+import org.url.shorten.application.urlShorten.dto.SelectUrlApiResponse;
+import org.url.shorten.application.urlShorten.dto.SelectUrlRequest;
+import org.url.shorten.application.urlShorten.port.UrlShortenService;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,13 +19,15 @@ public class UrlShortenController {
 
     @GetMapping("/{algorithmNumber}/{encodedId}")
     public RedirectView getUrl(@ModelAttribute @Valid SelectUrlRequest request) {
-        return new RedirectView(urlShortenService.selectUrl(request.toServiceRequest()).originalUrl());
+
+        SelectUrlApiResponse response = urlShortenService.selectUrl(request.toServiceRequest()).toApiResponse();
+        return new RedirectView(response.originalUrl());
     }
 
     @PostMapping("/shorten")
     public String ShortenUrl(@RequestBody @Valid CreateUrlRequest request) {
 
-        CreateUrlApiResponse response = urlShortenService.createUrl(request.toSelectServiceRequest());
+        CreateUrlApiResponse response = urlShortenService.createUrl(request.toSelectServiceRequest()).toApiResponse();
         return response.toUrl();
 
     }
